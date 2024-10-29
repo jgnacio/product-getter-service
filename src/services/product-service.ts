@@ -14,10 +14,18 @@ export const showProducts = async (porvider: string) => {
       error: "Provider not found",
     };
   }
+  // Mostrar PriceHistory
 
   const products = await prisma.product.findMany({
     where: {
       providerId: provider.ID_Provider,
+    },
+    include: {
+      priceHistory: {
+        orderBy: {
+          priceUpdatedAt: "desc",
+        },
+      },
     },
   });
 
