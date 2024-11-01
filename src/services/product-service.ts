@@ -26,6 +26,8 @@ export const showProducts = async (porvider: string) => {
           priceUpdatedAt: "desc",
         },
       },
+      provider: true,
+      category: true,
     },
   });
 
