@@ -6,14 +6,16 @@ export const show = async (req: Request, res: Response) => {
 
   if (!provider) {
     return res.status(400).json({
-      message: "Provider is required",
+      status: "failure",
+      error: "Provider is required",
     });
   }
 
-  const products = await showProducts(provider);
+  const response = await showProducts(provider);
 
-  return res.status(200).json({
-    message: "List Data Product on Cache - GCP",
-    data: products,
-  });
+  if (response.status === "failure") {
+    return res.status(404).json(response);
+  }
+
+  return res.status(200).json(response);
 };

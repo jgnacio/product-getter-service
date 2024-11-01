@@ -29,5 +29,8 @@ export const showProducts = async (porvider: string) => {
     },
   });
 
-  return products;
+  return {
+    status: "success",
+    data: products,
+  };
 };
