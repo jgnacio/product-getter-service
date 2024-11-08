@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   show,
+  showByProvider,
   showByCategory,
   showByPartnumber,
   showByPartNumberAndProvider,
@@ -9,7 +10,8 @@ import {
 
 const router: Router = Router();
 
-router.post("/products-cache", show);
+router.get("/products-cache", show);
+router.post("/products-cache", showByProvider);
 router.get("/products-cache/sku/:sku", showBySku);
 router.get("/products-cache/partNumber/:partnumber", showByPartnumber);
 router.post(

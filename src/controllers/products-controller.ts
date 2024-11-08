@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   showProducts,
+  showProductsByProvider,
   showProductsByCategory,
   showProductsByPartnumber,
   showProductsByPartnumberAndProvider,
@@ -8,6 +9,16 @@ import {
 } from "../services/product-service";
 
 export const show = async (req: Request, res: Response) => {
+  const response = await showProducts();
+
+  if (response.status === "failure") {
+    return res.status(404).json(response);
+  }
+
+  return res.status(200).json(response);
+};
+
+export const showByProvider = async (req: Request, res: Response) => {
   const provider = req.body.provider as string;
 
   if (!provider) {
@@ -17,7 +28,7 @@ export const show = async (req: Request, res: Response) => {
     });
   }
 
-  const response = await showProducts(provider);
+  const response = await showProductsByProvider(provider);
 
   if (response.status === "failure") {
     return res.status(404).json(response);

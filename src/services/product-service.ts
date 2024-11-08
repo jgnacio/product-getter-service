@@ -2,7 +2,26 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const showProducts = async (porvider: string) => {
+export const showProducts = async () => {
+  const products = await prisma.product.findMany({
+    include: {
+      priceHistory: {
+        orderBy: {
+          priceUpdatedAt: "desc",
+        },
+      },
+      provider: true,
+      category: true,
+    },
+  });
+
+  return {
+    status: "success",
+    data: products,
+  };
+};
+
+export const showProductsByProvider = async (porvider: string) => {
   const provider = await prisma.provider.findFirst({
     where: { name: porvider },
   });
